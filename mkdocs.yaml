@@ -1,0 +1,16 @@
+site_name: Brasa Language
+theme:
+  name: material
+  language: pt-br
+extra:
+  alternate:
+    - name: English
+      link: /
+      lang: en
+    - name: Português
+      link: /pt-br
+      lang: pt-br
+plugins:
+  - search
+  # - pyodide_macros:
+  #     setup_script: docs/scripts/interpreter.py
