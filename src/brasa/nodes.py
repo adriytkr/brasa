@@ -1,0 +1,39 @@
+from dataclasses import dataclass
+from typing import List, Any
+
+@dataclass
+class Node:
+  pass
+
+@dataclass
+class LiteralNode(Node):
+  value: Any
+
+@dataclass
+class VarLookupNode(Node):
+  name: str
+
+@dataclass
+class BinOpNode(Node):
+  left: Node
+  op: str
+  right: Node
+
+@dataclass
+class DeclarationNode(Node):
+  var_type: str
+  name: str
+  value: Node
+
+@dataclass
+class AssignmentNode(Node):
+  name: str
+  value: Node
+
+@dataclass
+class PrintNode(Node):
+  value: Node
+
+@dataclass
+class ProgramNode(Node):
+  statements: List[Node]

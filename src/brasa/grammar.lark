@@ -1,0 +1,57 @@
+start: top_item+
+
+?top_item: statement
+
+?statement: declaration ";"
+  | update_var ";"
+  | comparison ";"
+
+// Variables
+ID: /[a-zA-Z_][a-zA-Z0-9_]*/
+
+PRIMITIVE_TYPE: "int"
+  | "decimal"
+  | "texto"
+  | "logico"
+
+declaration: PRIMITIVE_TYPE ID ":=" expr
+update_var: ID ":=" expr
+
+// Expressions
+?expr: comparison
+
+?comparison: sum (COMP_OP sum)*
+COMP_OP: "==" | "!=" | ">" | "<" | ">=" | "<="
+
+?sum: product (ADD_OP product)*
+ADD_OP: "+" | "-"
+
+?product: atom (MUL_OP atom)*
+MUL_OP: "*" | "/"
+
+?atom: DECIMAL -> decimal
+  | INTEGER -> integer
+  | STRING -> string
+  | ID -> var_lookup
+  | "verdadeiro" -> true_val
+  | "falso" -> false_val
+  | "(" expr ")"
+
+DECIMAL: /[0-9]+\.[0-9]+/
+INTEGER: /[0-9]+/
+STRING: /"[^"]*"/
+
+
+
+// REMOVE THIS LATER
+diga_statement: "diga" "(" expr ")"
+
+
+
+// Ignore Whitespaces
+%import common.WS
+%ignore WS
+
+// Allow Comments
+COMMENT: /\/\/.*/
+%ignore COMMENT

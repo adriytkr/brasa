@@ -1,0 +1,6 @@
+int count:=10;
+int count:=30;
+count:=20+30*2;
+
+int age:=count*3;
+age:=age+count;
