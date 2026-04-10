@@ -1,13 +1,19 @@
 from lark import Lark
 
-from interpreter import Interpreter
+from BrasaTransformer import BrasaTransformer
+from BrasaInterpreter import BrasaInterpreter
 
-with open('./grammar.lark','r') as f:
-  parser=Lark(f.read())
+def run(filename:str):
+  with open('./grammar.lark','r') as g:
+    parser=Lark(g.read())
+    transformer = BrasaTransformer()
+    interpreter = BrasaInterpreter()
 
-  with open('./test.brasa','r') as f:
-    tree=parser.parse(f.read())
-    print(tree.pretty())
+    with open(filename,'r') as f:
+      tree=parser.parse(f.read())
+      print(tree.pretty())
 
-    result=Interpreter().transform(tree)
-    print(result)
+      ast=transformer.transform(tree)
+      interpreter.visit(ast)
+
+run('./test.brasa')

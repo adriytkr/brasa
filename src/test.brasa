@@ -1,10 +1,17 @@
-x = 10;
-y = 5 + x;
+int x := 10;
+int y := 5 + (x*2);
 diga(y);
 diga(x * 2);
 
-is_greater=x>5;
+logico is_greater:=x>5;
 diga(is_greater);
 
-is_equal=x==10;
+logico is_equal:=y-25>0;
+
+int age:=x;
+
+texto name:="Elleanor";
+
+diga(age);
+diga(name);
 diga(is_equal);
