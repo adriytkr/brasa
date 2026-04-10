@@ -1,6 +1,16 @@
 int count:=10;
-int count:=30;
 count:=20+30*2;
 
+diga(count);
+
 int age:=count*3;
+age:=0;
 age:=age+count;
+
+diga(age);
+
+logico test:="test";
+logico test2:=falso;
+
+diga(test);
+diga(test2);

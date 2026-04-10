@@ -1,4 +1,4 @@
-from lark import Transformer, Token
+from lark import Transformer
 from src.brasa.nodes import *
 
 class BrasaTransformer(Transformer):

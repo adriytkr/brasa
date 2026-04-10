@@ -29,13 +29,15 @@ def run_brasa():
 
   raw_tree=brasa_parser.parse(code)
 
+  # pprint(raw_tree)
+
   transformer=BrasaTransformer()
   ast=transformer.transform(raw_tree)
 
-  pprint(ast)
+  # pprint(ast)
   
-  # interpreter=BrasaInterpreter()
-  # interpreter.visit(ast)
+  interpreter=BrasaInterpreter()
+  interpreter.visit(ast)
 
 if __name__=='__main__':
   run_brasa()
