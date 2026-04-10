@@ -56,3 +56,7 @@ class IfNode(Node):
 class WhileNode(Node):
   condition:Node
   block:List[Node]
+
+@dataclass
+class UnaryMinusNode(Node):
+  expr: Node

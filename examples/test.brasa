@@ -1,6 +1,3 @@
-int count := 10;
+texto nome := "Elleanor";
 
-enquanto(count>0){
-  count--;
-  diga(count);
-}
+diga(nome);

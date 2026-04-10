@@ -102,3 +102,11 @@ class BrasaInterpreter:
     while self.visit(node.condition):
         for stmt in node.block:
             self.visit(stmt)
+
+  def visit_UnaryMinusNode(self, node):
+    value=self.visit(node.expr)
+    
+    if not isinstance(value, (int, float)):
+      raise RuntimeError('Error: Unary operator "-" can only be used with numbers')
+        
+    return -value

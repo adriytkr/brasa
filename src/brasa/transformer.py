@@ -43,6 +43,9 @@ class BrasaTransformer(Transformer):
 
   def decrement(self, children):
     return DecrementNode(str(children[0]))
+  
+  def unary_minus(self, children):
+    return UnaryMinusNode(children[0])
 
   # Variables
   def declaration(self, children):

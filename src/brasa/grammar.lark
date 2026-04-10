@@ -30,8 +30,11 @@ COMP_OP: "==" | "!=" | ">" | "<" | ">=" | "<="
 ?sum: product (ADD_OP product)*
 ADD_OP: "+" | "-"
 
-?product: atom (MUL_OP atom)*
+?product: unary (MUL_OP unary)*
 MUL_OP: "*" | "/"
+
+?unary: "-" unary -> unary_minus
+  | atom
 
 ?atom: DECIMAL -> decimal
   | INTEGER -> integer
