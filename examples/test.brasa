@@ -1,24 +1,6 @@
-int count:=10;
-count:=20+30*2;
+int count := 10;
 
-diga(count);
-
-int age:=count*3;
-age:=0;
-age:=age+count;
-
-age++;
-age++;
-age++;
-age++;
-age++;
-age--;
-age--;
-
-diga(age);
-
-logico test:="test";
-logico test2:=falso;
-
-diga(test);
-diga(test2);
+enquanto(count>0){
+  count--;
+  diga(count);
+}

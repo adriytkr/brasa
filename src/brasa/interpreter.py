@@ -83,3 +83,22 @@ class BrasaInterpreter:
         print('falso')
     else:
         print(result)
+
+  def visit_IfNode(self,node):
+    if self.visit(node.condition):
+      previous_env=self.current_env
+      self.current_env=Environment(parent=previous_env)
+
+      try:
+        for stmt in node.then_block:
+          self.visit(stmt)
+      finally:
+        self.current_env=previous_env
+    elif node.else_block:
+      for stmt in node.else_block:
+        self.visit(stmt)
+
+  def visit_WhileNode(self, node):
+    while self.visit(node.condition):
+        for stmt in node.block:
+            self.visit(stmt)

@@ -58,6 +58,27 @@ class BrasaTransformer(Transformer):
 
   def var_lookup(self,children):
     return VarLookupNode(str(children[0]))
+  
+  # Turing
+  def block(self,children):
+    return children
+
+  def if_statement(self, children):
+    condition=children[0]
+    then_block=children[1]
+    else_block=children[2] if len(children) > 2 else None
+
+    return IfNode(
+      condition,
+      then_block,
+      else_block
+    )
+
+  def while_statement(self, children):
+    return WhileNode(
+      children[0],
+      children[1]
+    )
 
   # REMOVE LATER
   def diga_statement(self,children):

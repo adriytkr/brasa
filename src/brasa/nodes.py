@@ -45,3 +45,14 @@ class IncrementNode(Node):
 @dataclass
 class DecrementNode(Node):
   name: str
+
+@dataclass
+class IfNode(Node):
+  condition:Node
+  then_block:List[Node]
+  else_block:List[Node]=None
+
+@dataclass
+class WhileNode(Node):
+  condition:Node
+  block:List[Node]

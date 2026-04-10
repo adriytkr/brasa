@@ -1,9 +1,11 @@
-start: top_item+
+start: top_item*
 
 ?top_item: statement
 
 ?statement: declaration ";"
   | update_var ";"
+  | if_statement
+  | while_statement
   | increment_decrement ";"
   | comparison ";"
   | diga_statement ";"
@@ -46,8 +48,11 @@ STRING: /"[^"]*"/
 increment_decrement: ID "++" -> increment
   | ID "--" -> decrement
 
+block: "{" statement+ "}"
 
+if_statement: "se" "(" expr ")" block ("senao" block)?
 
+while_statement: "enquanto" "(" expr ")" block
 
 
 // REMOVE THIS LATER
