@@ -26,6 +26,22 @@ class BrasaInterpreter:
 
   def visit_VarLookupNode(self,node):
     return self.current_env.get(node.name)
+  
+  def visit_IncrementNode(self,node):
+    current_val=self.current_env.get(node.name)
+
+    self.current_env.update(
+      node.name,
+      current_val+1
+    )
+
+  def visit_DecrementNode(self,node):
+    current_val=self.current_env.get(node.name)
+
+    self.current_env.update(
+      node.name,
+      current_val-1
+    )
 
   def visit_BinOpNode(self,node):
     left=self.visit(node.left)

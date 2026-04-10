@@ -7,6 +7,14 @@ int age:=count*3;
 age:=0;
 age:=age+count;
 
+age++;
+age++;
+age++;
+age++;
+age++;
+age--;
+age--;
+
 diga(age);
 
 logico test:="test";

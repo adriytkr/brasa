@@ -37,3 +37,11 @@ class PrintNode(Node):
 @dataclass
 class ProgramNode(Node):
   statements: List[Node]
+
+@dataclass
+class IncrementNode(Node):
+  name: str
+
+@dataclass
+class DecrementNode(Node):
+  name: str
