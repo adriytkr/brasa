@@ -18,7 +18,7 @@ class Environment:
       return self.variables[name]
 
     if self.parent:
-      return self.parent.obter_valor(name)
+      return self.parent.get_value(name)
 
     self.throw_undefined_variable_error(name)
 

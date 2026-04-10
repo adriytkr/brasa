@@ -4,7 +4,7 @@ from environment import Environment
 
 class BrasaInterpreter(Interpreter):
   def __init__(self):
-    self.env=Environment()
+    self.current_env=Environment()
 
   def visit_if_tree(self,node):
     if hasattr(node,'data'):
@@ -18,14 +18,14 @@ class BrasaInterpreter(Interpreter):
     var_value=self.visit_if_tree(tree.children[2])
     
     self.validate_var_type(var_type,var_value,var_name)
-    self.env.define(var_name, var_value, var_type)
+    self.current_env.define(var_name, var_value, var_type)
 
     return var_value
 
-  def update(self,tree):
+  def update_var(self,tree):
     var_name=str(tree.children[0])
     var_value=self.visit_if_tree(tree.children[1])
-    var_original_type=self.env.get_type(var_name)
+    var_original_type=self.current_env.get_type(var_name)
     
     self.validate_var_type(
       var_original_type,
@@ -33,13 +33,13 @@ class BrasaInterpreter(Interpreter):
       var_name
     )
 
-    self.env.update(var_name, var_value)
+    self.current_env.update(var_name, var_value)
 
     return var_value
 
   def var_lookup(self,tree):
     var_name=str(tree.children[0])
-    return self.env.get_value(var_name)
+    return self.current_env.get_value(var_name)
 
   def diga_statement(self, tree):
     value=self.visit_if_tree(tree.children[0])
@@ -103,4 +103,31 @@ class BrasaInterpreter(Interpreter):
     value
   ):
     raise TypeError(f'Erro: "{name}" espera {expected_type}, mas recebeu {type(value).__name__}')
+  
+  def if_statement(self, tree):
+    condition=self.visit_if_tree(tree.children[0])
+
+    if condition:
+      return self.visit(tree.children[1])
+    elif len(tree.children)>2:
+      return self.visit(tree.children[2])
+
+    return None
+
+  def while_statement(self, tree):
+    condition=tree.children[0]
+    block=tree.children[1]
+
+    while self.visit_if_tree(condition):
+      self.visit(block)
     
+    return None
+
+  def block(self, tree):
+    self.current_env=Environment(parent=self.current_env)
+
+    try:
+      for child in tree.children:
+        self.visit(child)
+    finally:
+      self.current_env=self.current_env.parent

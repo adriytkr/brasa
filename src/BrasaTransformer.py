@@ -10,10 +10,10 @@ class BrasaTransformer(Transformer):
   def string(self, s):
     return s[0][1:-1]
 
-  def true_val(self):
+  def true_val(self,_):
     return True
 
-  def false_val(self):
+  def false_val(self,_):
     return False
   
   def expr(self,children):

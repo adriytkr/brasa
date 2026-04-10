@@ -11,7 +11,7 @@ def run(filename:str):
 
     with open(filename,'r') as f:
       tree=parser.parse(f.read())
-      print(tree.pretty())
+      # print(tree.pretty())
 
       ast=transformer.transform(tree)
       interpreter.visit(ast)

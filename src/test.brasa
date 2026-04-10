@@ -1,17 +1,12 @@
-int x := 10;
-int y := 5 + (x*2);
-diga(y);
-diga(x * 2);
+int count:=10;
 
-logico is_greater:=x>5;
-diga(is_greater);
+se(10>0){
+  int count:=20;
+  enquanto(count>0){
+    diga(count);
+    count:=count-1;
+  }
+}
 
-logico is_equal:=y-25>0;
-
-int age:=x;
-
-texto name:="Elleanor";
-
-diga(age);
-diga(name);
-diga(is_equal);
+diga("final");
+diga(count);
