@@ -44,8 +44,7 @@ m;
 m:=y;
 m;
 
-x := 5;
-logico fafa := 1 == 1 ou 2 == 3;
-fafa;
+logico mmm := falso;
+mmm;
 
 //x;
