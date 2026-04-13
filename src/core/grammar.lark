@@ -38,6 +38,8 @@ array_literal: "[" [expr ("," expr)*] "]"   -> array_literal
 ?literal: FLOAT          -> float_literal
         | INTEGER        -> integer_literal
         | "nulo"         -> null_literal
+        | "verdadeiro"   -> true_literal
+        | "falso"        -> false_literal
 
 # ---------------- TOKENS ----------------
 
@@ -49,10 +51,10 @@ FLOAT: /\d+\.\d+/
 # ---------------- OPERATORS ----------------
 
 ?or_expr: and_expr
-        | or_expr "or" and_expr   -> or_op
+        | or_expr "ou" and_expr   -> or_op
 
 ?and_expr: comparison
-         | and_expr "and" comparison   -> and_op
+         | and_expr "e" comparison   -> and_op
 
 ?comparison: sum
            | sum ">" sum     -> gt

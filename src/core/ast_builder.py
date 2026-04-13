@@ -63,8 +63,8 @@ class ASTBuilder(Transformer):
   def nullable_type(self,type_):
     return NullableType(base_type=type_)
 
-  def bool_type(self):
-    return Boolean
+  def bool_type(self, _):
+    return BooleanType()
 
   @v_args(inline=True)
   def array_type(self,element_type,size):
@@ -85,6 +85,12 @@ class ASTBuilder(Transformer):
 
   def null_literal(self,_):
     return NullLiteral()
+
+  def true_literal(self, _):
+    return BooleanLiteral(True)
+
+  def false_literal(self, _):
+    return BooleanLiteral(False)
 
   @v_args(inline=True)
   def array_literal(self,*elements):
