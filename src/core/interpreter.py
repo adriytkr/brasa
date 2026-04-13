@@ -71,10 +71,28 @@ class Interpreter:
     return [self.visit(elem) for elem in node.elements]
 
   def visit_BinaryOp(self, node):
+    op = node.op
+
+    if op == BinOp.AND:
+      left=self.visit(node.left)
+
+      if not left:
+        return False
+
+      right=self.visit(node.right)
+      return bool(right)
+
+    if node.op == BinOp.OR:
+      left = self.visit(node.left)
+
+      if left:
+        return True
+
+      right = self.visit(node.right)
+      return bool(right)
+
     left = self.visit(node.left)
     right = self.visit(node.right)
-
-    op = node.op
 
     if op == BinOp.ADD:
       return left + right
@@ -97,11 +115,6 @@ class Interpreter:
       return left == right
     if op == BinOp.NE:
       return left != right
-
-    if op == BinOp.AND:
-      return left and right
-    if op == BinOp.OR:
-      return left or right
 
     raise Exception(f"Unknown operator: {op}")
 
