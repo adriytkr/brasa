@@ -15,3 +15,7 @@ class BinOp(Enum):
 
   AND = auto()
   OR = auto()
+
+class UnOp(Enum):
+  NEG = auto()
+  NOT = auto()

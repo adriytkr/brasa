@@ -72,9 +72,15 @@ FLOAT: /\d+\.\d+/
      | term "*" factor   -> mul
      | term "/" factor   -> div
 
-?factor: literal
-       | ID
-       | "(" expr ")"
+?factor: unary
+
+?unary: "-" unary   -> neg
+       | "!" unary  -> not_op
+       | atom
+
+?atom: literal
+     | ID
+     | "(" expr ")"
 
 # ---------------- CONFIG ----------------
 

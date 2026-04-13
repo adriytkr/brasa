@@ -4,8 +4,8 @@ from src.core.nodes.statements import *
 from src.core.nodes.types import *
 from src.core.nodes.literals import *
 
-from src.core.nodes.operators import BinaryOp
-from src.core.utils.operators import BinOp
+from src.core.nodes.operators import BinaryOp,UnaryOp
+from src.core.utils.operators import BinOp,UnOp
 
 class ASTBuilder(Transformer):
   # ---------------- PROGRAM ----------------
@@ -119,6 +119,10 @@ class ASTBuilder(Transformer):
   def div(self, left, right):
     return BinaryOp(left, BinOp.DIV, right)
 
+  @v_args(inline=True)
+  def neg(self, value):
+      return UnaryOp(UnOp.NEG, value)
+
   # ---------------- COMPARISONS ----------------
 
   @v_args(inline=True)
@@ -154,3 +158,7 @@ class ASTBuilder(Transformer):
   @v_args(inline=True)
   def or_op(self, left, right):
     return BinaryOp(left, BinOp.OR, right)
+
+  @v_args(inline=True)
+  def not_op(self, value):
+    return UnaryOp(UnOp.NOT, value)

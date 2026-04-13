@@ -1,7 +1,7 @@
 from src.symbols.scope import Scope
 from src.symbols.world import World
 
-from src.core.utils.operators import BinOp
+from src.core.utils.operators import BinOp,UnOp
 
 class Interpreter:
   # ---------------- PROGRAM ----------------
@@ -104,6 +104,17 @@ class Interpreter:
       return left or right
 
     raise Exception(f"Unknown operator: {op}")
+
+  def visit_UnaryOp(self, node):
+    value = self.visit(node.expr)
+
+    if node.op == UnOp.NEG:
+      return -value
+
+    if node.op == UnOp.NOT:
+      return not value
+
+    raise Exception(f"Unknown unary operator: {node.op}")
 
   # ---------------- STATEMENTS ----------------
 
