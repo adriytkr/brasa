@@ -3,9 +3,11 @@ program: statement*
 
 statement: var_declaration
          | var_declaration_null
+         | update_variable
 
 var_declaration: [CONST] type ID ":=" expr ";"
 var_declaration_null: [CONST] type ID ";"
+update_variable: ID ":=" expr ";"
 
 # ---------------- TYPES ----------------
 
@@ -39,3 +41,9 @@ FLOAT: /\d+\.\d+/
 
 %import common.WS
 %ignore WS
+
+COMMENT: /\/\/[^\n]*/
+MULTILINE_COMMENT: /\/\*[\s\S]*?\*\//
+
+%ignore COMMENT
+%ignore MULTILINE_COMMENT

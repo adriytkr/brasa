@@ -21,19 +21,26 @@ class ASTBuilder(Transformer):
   @v_args(inline=True)
   def var_declaration(self,const,type_,id,expr):
     return VarDeclarationStatement(
-      name=id,
+      id=id,
       type=type_,
-      value=expr,
+      expr=expr,
       is_const=const is not None
     )
 
   @v_args(inline=True)
   def var_declaration_null(self,const,type_,id):
     return VarDeclarationStatement(
-      name=id,
+      id=id,
       type=type_,
-      value=NullLiteral(),
+      expr=NullLiteral(),
       is_const=const is not None
+    )
+
+  @v_args(inline=True)
+  def update_variable(self,id,expr):
+    return UpdateVariableStatement(
+      id=id,
+      expr=expr
     )
 
   # ---------------- TYPES ----------------

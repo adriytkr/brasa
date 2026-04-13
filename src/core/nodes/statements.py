@@ -13,7 +13,12 @@ class Identifier:
 
 @dataclass
 class VarDeclarationStatement:
-  name:str
+  id:str
   type:Type
-  value:Literal
+  expr:Literal
   is_const:bool
+
+@dataclass
+class UpdateVariableStatement:
+  id:str
+  expr:Literal
