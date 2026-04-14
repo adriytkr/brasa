@@ -1,65 +1,7 @@
-/*
 int x := 5;
-const int y := 10;
-
-int? w := 5;
-const int? x := 5;
-
-int z := nulo;
-int? z := nulo;
-
-real m:=3.14;
-
-int[3] x := [1,2,3];
-int[2]? z := [];
-int?[2] z := [nulo,2];
-*/
-
-/*
-x := 5;
-y := 3.14;
-z := [];
-m := [3,4.14];
 
 x;
-100;
-*/
 
-int x := 5+3*2;
-x;
-x;
+int[3] numbers:=[1,2,3];
 
-real y:=3.14;
-y;
-
-y:=25;
-y;
-
-y:=[1,2,3];
-y;
-
-int? m:=nulo;
-m;
-
-m:=y;
-m;
-
-x := -33;
-x;
-logico mmm := -x;
-mmm;
-
-//x;
-
-se(falso) x;
-senao m;
-
-int akagi := 10;
-
-enquanto(akagi>0){
-  akagi := akagi - 1;
-
-  se(akagi==5)continue;
-  
-  akagi;
-}
+numbers;

@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from src.core.utils.operators import BinOp,UnOp
+from brasa.core.types.operators import BinOp,UnOp
 
 @dataclass
 class BinaryOp:

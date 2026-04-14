@@ -1,0 +1,11 @@
+[project]
+name = "brasa"
+version = "0.1.0"
+description = "Brasa programming language"
+requires-python = ">=3.10"
+
+[project.scripts]
+brasa = "brasa.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["brasa*"]

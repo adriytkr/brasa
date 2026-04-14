@@ -1,11 +1,11 @@
 from lark import Transformer,v_args
 
-from src.core.nodes.statements import *
-from src.core.nodes.types import *
-from src.core.nodes.literals import *
+from brasa.core.nodes.statements import *
+from brasa.core.nodes.types import *
+from brasa.core.nodes.literals import *
 
-from src.core.nodes.operators import BinaryOp,UnaryOp
-from src.core.utils.operators import BinOp,UnOp
+from brasa.core.nodes.operators import BinaryOp,UnaryOp
+from brasa.core.types.operators import BinOp,UnOp
 
 class ASTBuilder(Transformer):
   # ---------------- PROGRAM ----------------

@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
-from src.core.nodes.types import Type
-from src.core.nodes.literals import Literal
+from brasa.core.nodes.types import Type
+from brasa.core.nodes.literals import Literal
 
 @dataclass
 class Program:

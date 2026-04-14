@@ -1,9 +1,13 @@
+from dataclasses import dataclass
+
+@dataclass
 class BreakSignal(Exception):
   pass
 
+@dataclass
 class ContinueSignal(Exception):
   pass
 
+@dataclass
 class ReturnSignal(Exception):
-  def __init__(self, value):
-    self.value = value
+  value:any

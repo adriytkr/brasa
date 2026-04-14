@@ -1,8 +1,8 @@
-from src.symbols.scope import Scope
-from src.symbols.world import World
+from brasa.runtime.scope import Scope
+from brasa.runtime.world import World
 
-from src.core.nodes.signals import BreakSignal,ContinueSignal,ReturnSignal
-from src.core.utils.operators import BinOp,UnOp
+from brasa.interpreter.signals import BreakSignal,ContinueSignal,ReturnSignal
+from brasa.core.types.operators import BinOp,UnOp
 
 class Interpreter:
   # ---------------- PROGRAM ----------------

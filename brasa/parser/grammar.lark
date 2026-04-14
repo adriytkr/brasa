@@ -10,6 +10,7 @@ statement: var_declaration
          | continue_statement
          | block
          | print_variable
+         | expr ";"
 
 block: "{" statement* "}"   -> block
 ?body: block
@@ -20,6 +21,9 @@ block: "{" statement* "}"   -> block
 var_declaration: [CONST] type ID ":=" expr ";"
 var_declaration_null: [CONST] type ID ";"
 update_variable: ID ":=" expr ";"
+
+lvalue: ID
+      | expr "[" expr "]"
 
 # REMOVE LATER
 print_variable: expr ";"
