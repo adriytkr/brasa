@@ -26,3 +26,13 @@ class UpdateVariableStatement:
 @dataclass
 class PrintStatement:
   expr:Literal
+
+@dataclass
+class IfStatement:
+  condition:any
+  then_block:any
+  else_branch:any
+
+@dataclass
+class Block:
+  statements:any

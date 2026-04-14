@@ -27,6 +27,24 @@ class Interpreter:
     for statement in node.statements:
       self.visit(statement)
 
+  def visit_Block(self, node):
+    old_scope = self.current_scope
+    self.current_scope = Scope(parent=old_scope)
+
+    for stmt in node.statements:
+      self.visit(stmt)
+
+    self.current_scope = old_scope
+
+  def visit_IfStatement(self, node):
+    condition = self.visit(node.condition)
+
+    if condition:
+      return self.visit(node.then_block)
+
+    if node.else_branch:
+      return self.visit(node.else_branch)
+
   # ---------------- VARIABLES ----------------
 
   def visit_Identifier(self, node):

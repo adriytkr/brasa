@@ -17,6 +17,14 @@ class ASTBuilder(Transformer):
   def statement(self, item):
     return item
 
+  def block(self,statements):
+    print(statements)
+    return Block(list(statements))
+
+  @v_args(inline=True)
+  def if_statement(self, cond, then_block, else_branch=None):
+    return IfStatement(cond, then_block, else_branch)
+
   # ---------------- VARIABLES ----------------
 
   def ID(self,name):

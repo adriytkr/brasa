@@ -50,3 +50,6 @@ logico mmm := -x;
 mmm;
 
 //x;
+
+se(falso) x;
+senao m;

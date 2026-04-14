@@ -5,6 +5,12 @@ statement: var_declaration
          | var_declaration_null
          | update_variable
          | print_variable
+         | if_statement
+         | block
+
+block: "{" statement* "}"   -> block
+
+# ---------------- VARIABLES ----------------
 
 var_declaration: [CONST] type ID ":=" expr ";"
 var_declaration_null: [CONST] type ID ";"
@@ -81,6 +87,13 @@ FLOAT: /\d+\.\d+/
 ?atom: literal
      | ID
      | "(" expr ")"
+
+# ---------------- IF/ELSE ----------------
+
+if_statement: "se" "(" expr ")" body ( "senao" body )?
+
+?body: block
+     | statement
 
 # ---------------- CONFIG ----------------
 
