@@ -1,7 +1,7 @@
-int x := 5;
-
-x;
-
-se(1){
-
+func get_name(int x)->texto{
+  se(x > 0) retorne "Elleanor";
+  senao retorne "Ruby";
 }
+
+get_name(-43);
+get_name(127);

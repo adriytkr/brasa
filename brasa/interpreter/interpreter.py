@@ -1,10 +1,10 @@
-from brasa.runtime.scope import Scope
-from brasa.runtime.world import World
+from brasa.core.runtime.scope import Scope
+from brasa.core.runtime.world import World
 
-from brasa.core.nodes.values import FunctionValue
+from brasa.core.nodes.functions import FunctionValue
 from brasa.core.types.operators import BinaryOperationEnum,UnaryOperationEnum
 
-from brasa.interpreter.signals import BreakSignal,ContinueSignal,ReturnSignal
+from brasa.core.types.signals import BreakSignal,ContinueSignal,ReturnSignal
 
 class Interpreter:
   def __init__(self):
@@ -49,7 +49,7 @@ class Interpreter:
     value = self.visit(node.expr) if node.expr is not None else None
 
     var_id=self.world.create(
-      type_=node.type,
+      type=node.type,
       value=value,
       is_const=node.is_const
     )
@@ -85,13 +85,13 @@ class Interpreter:
     current = node.target.get(self)
     value = self.visit(node.expr)
 
-    if node.op==BinaryOperationEnum.ADD:
+    if node.op==BinaryOperationEnum.ADDITION:
         result=current+value
-    elif node.op==BinaryOperationEnum.SUB:
+    elif node.op==BinaryOperationEnum.SUBTRACTION:
         result=current-value
-    elif node.op==BinaryOperationEnum.MUL:
+    elif node.op==BinaryOperationEnum.MULTIPLICATION:
         result= current*value
-    elif node.op==BinaryOperationEnum.DIV:
+    elif node.op==BinaryOperationEnum.DIVISION:
         result=current/value
 
     node.target.set(self,result)
@@ -106,7 +106,7 @@ class Interpreter:
     #   self.world.set_value(var_id,current-1)
     current=node.target.get(self)
 
-    if node.op==BinaryOperationEnum.ADD:
+    if node.op==BinaryOperationEnum.ADDITION:
       new_value=current+1
     else:
       new_value=current-1
@@ -123,7 +123,7 @@ class Interpreter:
   def visit_FloatValue(self,node):
     return node.value
 
-  def visit_StringLiteral(self,node):
+  def visit_StringValue(self,node):
     return node.value
 
   def visit_NullValue(self,node):
@@ -166,26 +166,26 @@ class Interpreter:
     left = self.visit(node.left)
     right = self.visit(node.right)
 
-    if op == BinaryOperationEnum.ADD:
+    if op == BinaryOperationEnum.ADDITION:
       return left + right
-    if op == BinaryOperationEnum.SUB:
+    if op == BinaryOperationEnum.SUBTRACTION:
       return left - right
-    if op == BinaryOperationEnum.MUL:
+    if op == BinaryOperationEnum.MULTIPLICATION:
       return left * right
-    if op == BinaryOperationEnum.DIV:
+    if op == BinaryOperationEnum.DIVISION:
       return left / right
 
-    if op == BinaryOperationEnum.GT:
+    if op == BinaryOperationEnum.GREATER_THAN:
       return left > right
-    if op == BinaryOperationEnum.LT:
+    if op == BinaryOperationEnum.LESS_THAN:
       return left < right
-    if op == BinaryOperationEnum.GE:
+    if op == BinaryOperationEnum.GREATER_THAN_OR_EQUAL_TO:
       return left >= right
-    if op == BinaryOperationEnum.LE:
+    if op == BinaryOperationEnum.LESS_THAN_OR_EQUAL_TO:
       return left <= right
-    if op == BinaryOperationEnum.EQ:
+    if op == BinaryOperationEnum.EQUAL:
       return left == right
-    if op == BinaryOperationEnum.NE:
+    if op == BinaryOperationEnum.NOT_EQUAL:
       return left != right
 
     raise Exception(f"Unknown operator: {op}")
@@ -193,7 +193,7 @@ class Interpreter:
   def visit_UnaryOperation(self, node):
     value = self.visit(node.expr)
 
-    if node.op == UnaryOperationEnum.NEG:
+    if node.op == UnaryOperationEnum.NEGATIVE:
       return -value
 
     if node.op == UnaryOperationEnum.NOT:
@@ -231,7 +231,7 @@ class Interpreter:
 
   # ---------------- FUNCTIONS ----------------
 
-  def visit_FunctionDeclaration(self, node):
+  def visit_FunctionDeclarationStatement(self, node):
     func=FunctionValue(
       params=node.params,
       body=node.body,
@@ -240,7 +240,7 @@ class Interpreter:
     )
 
     var_id=self.world.create(
-      type_=None,
+      type=None,
       value=func,
       is_const=True
     )
@@ -262,7 +262,7 @@ class Interpreter:
     new_scope=Scope(parent=func.closure_scope)
 
     for param, arg in zip(func.params, args):
-      var_id = self.world.create(type_=param[0], value=arg)
+      var_id = self.world.create(type=param[0], value=arg)
       new_scope.declare(param[1].name, var_id)
 
     old_scope=self.current_scope
