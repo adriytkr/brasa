@@ -1,6 +1,6 @@
 from brasa.core.runtime.scope import Scope
 
-from brasa.core.nodes.functions import FunctionValue
+from brasa.core.nodes.functions import FunctionValue,BuiltinFunction
 from brasa.core.types.signals import ReturnSignal
 
 class FunctionsMixin:
@@ -35,6 +35,9 @@ class FunctionsMixin:
     func=self.visit(node.callee)
     args=[self.visit(arg) for arg in node.args]
 
+    if isinstance(func,BuiltinFunction):
+      return func.func(self,args)
+
     new_scope=Scope(parent=func.closure_scope)
 
     for param, arg in zip(func.params, args):
@@ -64,3 +67,25 @@ class FunctionsMixin:
       value=self.visit(node.expr)
 
     raise ReturnSignal(value)
+
+  def _builtin_print(self,interpreter,args):
+    for arg in args:
+      print(arg,end='')
+
+  def _builtin_input(self,interpreter,args):
+    return input()
+
+  def _register_builtin_functions(self):
+    self._define_builtin('diga',self._builtin_print)
+    self._define_builtin('leia',self._builtin_input)
+
+  def _define_builtin(self,name,func):
+    builtin=BuiltinFunction(name,func)
+
+    entity_id=self.world.create(
+      type=None,
+      value=builtin,
+      is_const=True
+    )
+
+    self.current_scope.declare(name,entity_id)

@@ -27,7 +27,9 @@ def main(filename):
 
   if filename is not None:
     try: run_file(filename)
-    except Exception: sys.exit(1)
+    except Exception as e:
+      click.secho(e,fg='red')
+      sys.exit(1)
   else:
     repl()
 

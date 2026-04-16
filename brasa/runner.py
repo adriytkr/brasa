@@ -31,9 +31,9 @@ def run_code(
   ast=ASTBuilder().transform(raw_tree)
 
   if interpreter is None:
-    interpreter = Interpreter()
+    interpreter=Interpreter()
 
-  return interpreter.visit(ast)
+  interpreter.visit(ast)
 
 def run_file(file_path:str):
   file_path=Path(file_path).resolve()

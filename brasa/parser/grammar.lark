@@ -12,8 +12,6 @@ statement: variable_declaration
          | block
          | postfix
          | function_declaration
-         | call_function
-         | print_variable # REMOVE LATER
          | expr ";"
          | call_function ";"
 
@@ -46,9 +44,6 @@ OP_POSTFIX: "++"
 
 ?lvalue: ID                      -> variable_lvalue
       | lvalue "[" expr "]"      -> index_lvalue
-
-# REMOVE LATER
-print_variable: expr ";"
 
 # ---------------- TYPES ----------------
 
@@ -123,11 +118,9 @@ array_literal: "[" [expr ("," expr)*] "]"   -> array_value
      | atom "[" expr "]"   -> index_expr
      | "(" expr ")"
 
-# ---------------- IF/ELSE ----------------
+# ---------------- FLOW ----------------
 
 if_statement: "se" "(" expr ")" body ( "senao" body )?
-
-# ---------------- LOOP ----------------
 
 while_statement: "enquanto" "(" expr ")" block
 break_statement: "pare" ";"

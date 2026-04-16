@@ -39,3 +39,8 @@ class LambdaExpression:
   parameters:any
   return_type:any
   body:any
+
+@dataclass
+class BuiltinFunction:
+  name:any
+  func:any

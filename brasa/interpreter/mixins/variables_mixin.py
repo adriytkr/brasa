@@ -2,9 +2,9 @@ from brasa.core.types.operators import BinaryOperationEnum
 
 class VariablesMixin:
   def visit_Identifier(self,node):
-    var_id=self.current_scope.lookup(node.name)
+    entity_id=self.current_scope.lookup(node.name)
 
-    return self.world.get_value(var_id)
+    return self.world.get_value(entity_id)
 
   def visit_VariableDeclarationStatement(self,node):
     value=self.visit(node.expr) if node.expr is not None else None

@@ -29,6 +29,8 @@ class Interpreter(
     self.current_scope=Scope()
     self.world=World()
 
+    self._register_builtin_functions()
+
   def visit(self,node):
     method_name=f'visit_{type(node).__name__}'
     visitor=getattr(

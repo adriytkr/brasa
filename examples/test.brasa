@@ -1,11 +1,11 @@
-func get_name(int x)->texto{
-  se(x > 0) retorne "Elleanor";
-  senao retorne "Ruby";
+diga("Digite seu nome: ");
+texto name := leia();
+
+func welcome(texto name)->texto{
+  texto welcome_message := "Welcome, " + name + "!";
+
+  retorne welcome_message;
 }
 
-get_name(-43);
-get_name(127);
-
-int? x := 5;
-
-x;
+texto result := welcome(name);
+diga(result);
