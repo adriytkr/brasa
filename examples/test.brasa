@@ -2,6 +2,6 @@ importe std.io como u;
 importe std.conversions como c;
 
 int age := c.to_int(u.leia());
+
 u.diga(age);
-
-
+u.diga(10 % 3);

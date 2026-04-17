@@ -106,6 +106,7 @@ array_literal: "[" [expr ("," expr)*] "]"   -> array_value
 ?term: factor
      | term "*" factor                   -> mul
      | term "/" factor                   -> div
+     | term "%" factor                   -> remainder
 
 ?factor: unary
 

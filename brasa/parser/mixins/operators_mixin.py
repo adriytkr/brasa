@@ -56,6 +56,14 @@ class OperatorsMixin:
     )
 
   @v_args(inline=True)
+  def remainder(self,left,right):
+    return BinaryOperation(
+      left,
+      BinaryOperationEnum.REMAINDER,
+      right
+    )
+
+  @v_args(inline=True)
   def neg(self,value):
     return UnaryOperation(
       UnaryOperationEnum.NEGATIVE,

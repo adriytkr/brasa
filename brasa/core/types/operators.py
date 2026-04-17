@@ -5,6 +5,7 @@ class BinaryOperationEnum(Enum):
   SUBTRACTION=auto()
   MULTIPLICATION=auto()
   DIVISION=auto()
+  REMAINDER=auto()
 
   GREATER_THAN=auto()
   LESS_THAN=auto()

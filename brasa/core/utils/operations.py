@@ -21,6 +21,9 @@ def mul(left,right):
 def div(left,right):
   return FloatValue(left.value / right.value)
 
+def remainder(left,right):
+  return FloatValue(left.value % right.value)
+
 def greater_than(left,right):
   return BooleanValue(left.value > right.value)
 

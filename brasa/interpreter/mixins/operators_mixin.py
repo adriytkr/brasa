@@ -1,8 +1,6 @@
 from brasa.core.types.operators import BinaryOperationEnum,UnaryOperationEnum
 
-from brasa.core.nodes.primitive_values import IntegerValue,FloatValue,StringValue,NullValue,BooleanValue
-
-from brasa.core.utils.operations import add,sub,mul,div,greater_than,less_than,equal,not_equal,and_,or_,negative,not_
+from brasa.core.utils.operations import add,sub,mul,div,remainder,greater_than,less_than,equal,not_equal,and_,or_,negative,not_
 
 class OperatorsMixin:
   def visit_BinaryOperation(self,node):
@@ -24,6 +22,9 @@ class OperatorsMixin:
 
     if op == BinaryOperationEnum.DIVISION:
       return div(left,right)
+
+    if op == BinaryOperationEnum.REMAINDER:
+      return remainder(left,right)
 
     # -------- COMPARISON --------
 
