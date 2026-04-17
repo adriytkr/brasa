@@ -15,7 +15,10 @@ class FunctionValue(Value):
   return_type:any
   closure_scope:any
 
+@dataclass
 class VoidType(Type): pass
+
+@dataclass
 class VoidValue(Value): pass
 
 @dataclass

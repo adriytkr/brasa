@@ -21,7 +21,9 @@ def load_grammar(grammar_path):
 
 def run_code(
   code:str,
-  interpreter=None
+  interpreter=None,
+  entry_file=None,
+  root=None
 ):
   parser=load_grammar(
     Path(__file__).parent/'parser'/'grammar.lark'
@@ -31,11 +33,18 @@ def run_code(
   ast=ASTBuilder().transform(raw_tree)
 
   if interpreter is None:
-    interpreter=Interpreter()
+    interpreter=Interpreter(
+      entry_file=entry_file,
+      root=root,
+      parser=parser
+    )
 
   interpreter.visit(ast)
 
-def run_file(file_path:str):
+def run_file(
+  file_path:str,
+  root=None,
+):
   file_path=Path(file_path).resolve()
 
   if not file_path.exists():
@@ -45,4 +54,8 @@ def run_file(file_path:str):
   with open(file_path,'r') as f:
     code=f.read()
 
-  run_code(code)
+  run_code(
+    code,
+    root=root,
+    entry_file=file_path
+  )

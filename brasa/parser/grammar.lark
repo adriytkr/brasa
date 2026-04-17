@@ -1,7 +1,5 @@
 ?start: program
-program: export_statement
-       | import_statement
-       | statement*
+program: statement*
 
 statement: variable_declaration
          | assignment
@@ -16,6 +14,8 @@ statement: variable_declaration
          | function_declaration
          | expr ";"
          | call_function ";"
+         | import_statement
+         | export_statement
 
 block: "{" statement* "}"   -> block
 ?body: block
@@ -74,6 +74,9 @@ nullable_type: type "?"                     -> nullable_type
      | or_expr
      | lambda_expr
      | call_function
+     | member
+
+member: expr "." ID
 
 array_literal: "[" [expr ("," expr)*] "]"   -> array_value
 

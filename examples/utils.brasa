@@ -1,0 +1,8 @@
+int x := 100;
+
+func say_hi(int m){
+  retorne 1;
+}
+
+exporte x;
+exporte say_hi;

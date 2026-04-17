@@ -13,3 +13,16 @@ class ExportItem:
 @dataclass
 class ExportStatement:
   items:any
+
+@dataclass
+class ModuleValue:
+  name:any
+  exports:any
+
+@dataclass
+class ModuleType:pass
+
+@dataclass
+class Member:
+  obj:any
+  name:any

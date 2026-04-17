@@ -1,6 +1,6 @@
 from lark import v_args
 
-from brasa.core.nodes.modules import ImportStatement,ExportItem,ExportStatement
+from brasa.core.nodes.modules import ImportStatement,ExportItem,ExportStatement,Member
 
 class ModulesMixin:
   @v_args(inline=True)
@@ -31,11 +31,11 @@ class ModulesMixin:
   def export_item(
     self,
     name,
-    alias=None
+    alias
   ):
     return ExportItem(
       name=name.name,
-      alias=alias.name if alias else None
+      alias=alias.name if alias is not None else None
     )
 
   def export_list(
@@ -43,3 +43,14 @@ class ModulesMixin:
     items
   ):
     return items
+
+  @v_args(inline=True)
+  def member(
+    self,
+    obj,
+    name
+  ):
+    return Member(
+      obj=obj,
+      name=name
+    )

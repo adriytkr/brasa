@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from brasa.core.runtime.scope import Scope
 from brasa.core.runtime.world import World
 
@@ -29,11 +31,20 @@ class Interpreter(
 
   ModulesMixin
 ):
-  def __init__(self):
+  def __init__(self,entry_file,root,parser):
     self.current_scope=Scope()
     self.world=World()
+    self.parser=parser
+
+    if root:
+      self.base_path = Path(root).resolve()
+    elif entry_file:
+      self.base_path = Path(entry_file).resolve().parent
+    else:
+      self.base_path = Path.cwd()
 
     self._register_builtin_functions()
+    self._current_exports = None
 
   def visit(self,node):
     method_name=f'visit_{type(node).__name__}'

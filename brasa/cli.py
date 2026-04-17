@@ -13,11 +13,16 @@ __version__=metadata.version('brasa-lang')
   required=False,
   type=click.Path(exists=True)
 )
+@click.option(
+  '--root',
+  type=click.Path(exists=True, file_okay=False),
+  help='Root directory for module resolution'
+)
 @click.version_option(
   version=__version__,
   prog_name='Brasa'
 )
-def main(filename):
+def main(filename,root):
   """
     Brasa Programming Language CLI.
 
@@ -26,7 +31,10 @@ def main(filename):
   """
 
   if filename is not None:
-    try: run_file(filename)
+    try: run_file(
+      filename,
+      root=root
+    )
     except Exception as e:
       click.secho(e,fg='red')
       sys.exit(1)
