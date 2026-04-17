@@ -17,13 +17,17 @@ class ArrayMixin:
 
     return ArrayValue(elements=elements)
 
+  # @v_args(inline=True)
+  # def index_expr(
+  #   self,
+  #   base,
+  #   index
+  # ):
+  #   return IndexExpression(
+  #     base=base,
+  #     index=index
+  #   )
+
   @v_args(inline=True)
-  def index_expr(
-    self,
-    base,
-    index
-  ):
-    return IndexExpression(
-      base=base,
-      index=index
-    )
+  def index_expr(self, obj, index):
+      return IndexExpression(obj, index)

@@ -79,12 +79,22 @@ class ModulesMixin:
 
     # ---------------- MEMBER ACCESS ----------------
 
-    def visit_Member(self, node):
-        entity_id=self.current_scope.lookup(node.obj.name)
-        module=self.world.get_value(entity_id)
-        # if node.name not in module.exports:
-        #     raise Exception(
-        #         f'Module "{obj.name}" has no export "{node.name}"'
-        #     )
+    # def visit_Member(self, node):
+    #     entity_id=self.current_scope.lookup(node.obj.name)
+    #     module=self.world.get_value(entity_id)
+    #     # if node.name not in module.exports:
+    #     #     raise Exception(
+    #     #         f'Module "{obj.name}" has no export "{node.name}"'
+    #     #     )
 
-        return module.exports[node.name.name]
+    #     return module.exports[node.name.name]
+
+    def visit_Member(self, node):
+        obj=self.visit(node.obj)
+
+        if node.name.name not in obj.exports:
+            raise Exception(
+                f'Module "{obj.name}" has no export "{node.name}"'
+            )
+
+        return obj.exports[node.name.name]

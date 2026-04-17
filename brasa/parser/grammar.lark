@@ -10,10 +10,11 @@ statement: variable_declaration
          | continue_statement
          | return_statement
          | block
-         | postfix
+         //| postfix
+         | postfix_statement
          | function_declaration
          | expr ";"
-         | call_function ";"
+         //| call_function ";"
          | import_statement
          | export_statement
 
@@ -40,7 +41,7 @@ OP_ASSIGN: "+="
          | "*="
          | "/="
 
-postfix: lvalue OP_POSTFIX ";"   -> postfix
+postfix_statement: lvalue OP_POSTFIX ";"   -> postfix
 OP_POSTFIX: "++"
           | "--"
 
@@ -68,15 +69,21 @@ nullable_type: type "?"                     -> nullable_type
 
 # ---------------- EXPRESSIONS ----------------
 
-?expr: literal
-     | array_literal
-     | ID
-     | or_expr
-     | lambda_expr
-     | call_function
-     | member
+?expr: or_expr
 
-member: expr "." ID
+?postfix: atom
+        | postfix "." ID                  -> member
+        | postfix "(" [args_list] ")"     -> call
+        | postfix "[" expr "]"            -> index_expr
+
+//?expr: literal | array_literal
+     //| ID
+     //| or_expr
+     //| lambda_expr
+     //| call_function
+     //| member
+
+//member: expr "." ID
 
 array_literal: "[" [expr ("," expr)*] "]"   -> array_value
 
@@ -115,12 +122,12 @@ array_literal: "[" [expr ("," expr)*] "]"   -> array_value
 
 ?unary: "-" unary                        -> neg
        | "!" unary                       -> not_op
-       | atom
+       | postfix
 
 ?atom: literal
      | ID
-     | call_function
-     | atom "[" expr "]"   -> index_expr
+     | array_literal
+     | lambda_expr
      | "(" expr ")"
 
 # ---------------- FLOW ----------------
@@ -134,7 +141,7 @@ continue_statement: "continue" ";"
 # ---------------- FUNCTIONS ----------------
 
 function_declaration: "func" ID "(" [param_list] ")" ["->" type] block
-call_function: ID "(" [args_list] ")"
+//call_function: ID "(" [args_list] ")"
 
 args_list: expr ("," expr)*
 

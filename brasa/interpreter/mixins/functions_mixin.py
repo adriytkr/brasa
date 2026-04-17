@@ -25,7 +25,7 @@ class FunctionsMixin:
 
   def visit_LambdaExpression(self,node):
     return FunctionValue(
-      params=node.params,
+      params=node.parameters,
       body=node.body,
       return_type=node.return_type,
       closure_scope=self.current_scope,

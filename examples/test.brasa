@@ -1,6 +1,59 @@
-int y := 200;
-int m := 300;
+//importe std.texto como t;
 
 importe utils como u;
 
-u.say_hi(3);
+diga(u.say_hi());
+diga(u.say_hi());
+diga(u.say_hi());
+diga(u.say_hi());
+diga(u.say_hi());
+diga(u.say_hi());
+diga(u.say_hi());
+diga(u.say_hi());
+diga(u.say_hi());
+diga(u.say_hi());
+diga(u.say_hi());
+diga(u.say_hi());
+diga(u.say_hi());
+diga(u.say_hi());
+diga(u.say_hi());
+diga(u.say_hi());
+diga(u.say_hi());
+diga(u.say_hi());
+diga(u.say_hi());
+diga(u.say_hi());
+diga(u.say_hi());
+diga(u.say_hi());
+diga(u.say_hi());
+diga(u.say_hi());
+diga(u.say_hi());
+diga(u.say_hi());
+diga(u.say_hi());
+diga(u.say_hi());
+diga(u.say_hi());
+diga(u.say_hi());
+diga(u.say_hi());
+diga(u.say_hi());
+diga(u.say_hi());
+
+func gritar(int volume) -> texto{
+  retorne func(texto mensagem) -> texto{
+    texto sufixo:='';
+
+    int x := 0;
+    enquanto(x < volume){
+      sufixo += "!";
+      x++;
+    }
+
+    // //retorne t.caixa_alta(mensagem) + sufixo;
+    retorne mensagem + sufixo;
+  };
+}
+
+(texto) -> texto gritar_baixo := gritar(1);
+(texto) -> texto gritar_alto := gritar(3);
+
+diga(gritar_baixo("AAAAAHH"));
+diga(gritar_alto("AAAAAHH22"));
+diga(gritar(10)('fuck'));

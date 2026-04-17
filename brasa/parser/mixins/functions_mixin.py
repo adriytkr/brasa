@@ -35,15 +35,22 @@ class FunctionsMixin:
     )
 
   @v_args(inline=True)
-  def call_function(
-    self,
-    target,
-    parameters
-  ):
+  def call(self, callee, args=None):
     return CallExpression(
-      callee=target,
-      args=[] if parameters is None else parameters
+        callee=callee,
+        args=[] if args is None else args
     )
+
+  # @v_args(inline=True)
+  # def call_function(
+  #   self,
+  #   target,
+  #   parameters
+  # ):
+  #   return CallExpression(
+  #     callee=target,
+  #     args=[] if parameters is None else parameters
+  #   )
 
   @v_args(inline=True)
   def return_type(self,type): return type

@@ -18,9 +18,10 @@ class VariablesMixin:
     base,
     index
   ):
+    print(base,index)
     return IndexLValue(
       base=base,
-      index_expr=index
+      index=index
     )
 
   def ID(self,name):
@@ -42,7 +43,7 @@ class VariablesMixin:
     )
 
   @v_args(inline=True)
-  def assigment(
+  def assignment(
     self,
     target,
     expr

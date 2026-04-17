@@ -1,4 +1,4 @@
-int x := 100;
+int x := 666;
 
 func say_hi(int m){
   retorne 1;
