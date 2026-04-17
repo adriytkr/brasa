@@ -2,6 +2,8 @@ from lark import v_args
 
 from brasa.core.nodes.primitive_values import IntegerValue,FloatValue,StringValue,BooleanValue,NullValue
 
+from brasa.core.utils.string import parse_string
+
 class PrimitiveValuesMixin:
   @v_args(inline=True)
   def integer_value(self,value): return IntegerValue(int(value))
@@ -13,6 +15,9 @@ class PrimitiveValuesMixin:
   def false_value(self,_): return BooleanValue(False)
 
   @v_args(inline=True)
-  def string_value(self,token): return StringValue(token[1:-1])
+  def string_value(self,token):
+    raw=token[1:-1]
+    value=parse_string(raw)
+    return StringValue(value)
 
   def null_value(self,_): return NullValue()
