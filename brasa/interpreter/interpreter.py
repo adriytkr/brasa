@@ -13,6 +13,8 @@ from brasa.interpreter.mixins.flow_mixin import FlowMixin
 from brasa.interpreter.mixins.arrays_mixin import ArrayMixins
 from brasa.interpreter.mixins.functions_mixin import FunctionsMixin
 
+from brasa.interpreter.mixins.modules_mixin import ModulesMixin
+
 class Interpreter(
   BasicsMixin,
 
@@ -23,7 +25,9 @@ class Interpreter(
   FlowMixin,
 
   ArrayMixins,
-  FunctionsMixin
+  FunctionsMixin,
+
+  ModulesMixin
 ):
   def __init__(self):
     self.current_scope=Scope()

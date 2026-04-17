@@ -1,5 +1,7 @@
 ?start: program
-program: statement*
+program: export_statement
+       | import_statement
+       | statement*
 
 statement: variable_declaration
          | assignment
@@ -139,6 +141,15 @@ param: type ID
 lambda_expr: "func" "(" [param_list] ")" ["->" type] block
 
 return_statement: "retorne" expr? ";"
+
+# ---------------- IMPORT/EXPORTS ----------------
+
+export_statement: "exporte" export_list ";"
+export_list: export_item ("," export_item)*
+export_item: ID ["como" ID]
+
+import_statement: "importe" module_path ["como" ID] ";"
+module_path: ID ("." ID)*
 
 # ---------------- CONFIG ----------------
 

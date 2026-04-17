@@ -4,7 +4,7 @@ from brasa.core.nodes.functions import FunctionValue,BuiltinFunction
 from brasa.core.types.signals import ReturnSignal
 
 class FunctionsMixin:
-  def visit_FunctionDeclarationStatement(self, node):
+  def visit_FunctionDeclarationStatement(self,node):
     func=FunctionValue(
       params=node.params,
       body=node.body,
@@ -40,7 +40,10 @@ class FunctionsMixin:
 
     new_scope=Scope(parent=func.closure_scope)
 
-    for param, arg in zip(func.params, args):
+    for param, arg in zip(
+      func.params,
+      args
+    ):
       entity_id=self.world.create(type=param[0], value=arg)
       new_scope.declare(
         name=param[1].name,

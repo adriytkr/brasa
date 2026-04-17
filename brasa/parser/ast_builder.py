@@ -13,6 +13,8 @@ from brasa.parser.mixins.flow_mixin import FlowMixin
 from brasa.parser.mixins.arrays_mixin import ArrayMixin
 from brasa.parser.mixins.functions_mixin import FunctionsMixin
 
+from brasa.parser.mixins.modules_mixin import ModulesMixin
+
 class ASTBuilder(
   Transformer,
 
@@ -28,5 +30,7 @@ class ASTBuilder(
 
   ArrayMixin,
   FunctionsMixin,
+
+  ModulesMixin
 ):
   pass
