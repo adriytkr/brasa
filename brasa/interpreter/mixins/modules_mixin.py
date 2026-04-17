@@ -1,100 +1,115 @@
 from pathlib import Path
+import importlib.util
 
 from brasa.core.runtime.scope import Scope
 from brasa.core.runtime.world import World
 from brasa.core.nodes.modules import ModuleValue,ModuleType
+from brasa.core.nodes.functions import FunctionType,BuiltinFunction
 
 from brasa.parser.ast_builder import ASTBuilder
 
 class ModulesMixin:
+  def execute_local_module():
+    pass
 
-    # ---------------- EXECUTE MODULE ----------------
+  def execute_system_module():
+    pass
 
-    def execute_module(self, path_parts):
-        file_path = Path(self.base_path).joinpath(*path_parts).with_suffix(".brasa")
+  def execute_module(self, path_parts):
+    module_name='.'.join(path_parts)
+    file_path=Path(self.base_path).joinpath(*path_parts).with_suffix('.brasa')
 
-        if not file_path.exists():
-            raise Exception(f"Module not found: {'.'.join(path_parts)}")
+    if file_path.exists():
+      code=file_path.read_text(encoding='utf-8')
+      raw_tree=self.parser.parse(code)
+      ast=ASTBuilder().transform(raw_tree)
 
-        code = file_path.read_text(encoding="utf-8")
-        raw_tree=self.parser.parse(code)
-        ast = ASTBuilder().transform(raw_tree)
+      old_scope=self.current_scope
+      old_exports=self._current_exports
+      old_world=self.world
 
-        # salvar estado atual
-        old_scope = self.current_scope
-        old_exports = self._current_exports
-        old_world=self.world
+      self.current_scope=Scope()
+      self.world=World()
+      self._current_exports={}
 
-        # novo contexto isolado
-        self.current_scope = Scope()
-        self.world=World()
-        self._current_exports = {}
+      for stmt in ast.statements:
+        self.visit(stmt)
 
-        # executa o módulo
-        for stmt in ast.statements:
-          print(stmt,self.world.values)
-          self.visit(stmt)
+      module=ModuleValue(
+        name=module_name,
+        exports=self._current_exports
+      )
 
-        module = ModuleValue(
-          name=".".join(path_parts),
-          exports=self._current_exports
-        )
+      self.current_scope=old_scope
+      self._current_exports=old_exports
+      self.world=old_world
 
-        # restaurar estado
-        self.current_scope = old_scope
-        self._current_exports = old_exports
-        self.world = old_world
+      return module
+    else:
+      std_file = self.std_path.joinpath(*path_parts).with_suffix(".py")
 
-        return module
+      if std_file.exists():
+          spec = importlib.util.spec_from_file_location(module_name, std_file)
+          mod = importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(mod)
 
-    # ---------------- IMPORT ----------------
+          if not hasattr(mod, "exports"):
+              raise Exception(f"Builtin module '{module_name}' must define 'exports'")
 
-    def visit_ImportStatement(self, node):
-        module = self.execute_module(node.path)
+          exports = {}
 
-        alias = node.alias or node.path[-1]
+          for name, value in mod.exports.items():
+              value=BuiltinFunction(
+                name=None,
+                func=value,
+              )
+              entity_id = self.world.create(
+                  type=FunctionType(
+                    param_types=[],
+                    return_type=None
+                  ),
+                  value=value
+              )
 
-        entity_id=self.world.create(
-          type=ModuleType(),
-          value=module
-        )
-        self.current_scope.declare(alias,entity_id)
+              exports[name] = value
 
-    # ---------------- EXPORT ----------------
+          return ModuleValue(
+              name=module_name,
+              exports=exports
+          )
 
-    def visit_ExportStatement(self, node):
-        print(node)
-        if self._current_exports is None:
-            raise Exception("exporte só pode ser usado no topo do módulo")
+      raise Exception(f'Module not found: {'.'.join(path_parts)}')
 
-        for item in node.items:
-            name = item.name
-            alias = item.alias or name
+  def visit_ImportStatement(self,node):
+    module=self.execute_module(node.path)
+    alias=node.alias or node.path[-1]
 
-            entity_id = self.current_scope.lookup(name)
-            value=self.world.get_value(entity_id)
-            print(value)
+    entity_id=self.world.create(
+      type=ModuleType(),
+      value=module
+    )
 
-            self._current_exports[alias] = value
+    self.current_scope.declare(alias,entity_id)
 
-    # ---------------- MEMBER ACCESS ----------------
+  def visit_ExportStatement(self,node):
+    if self._current_exports is None:
+      raise Exception('export error')
 
-    # def visit_Member(self, node):
-    #     entity_id=self.current_scope.lookup(node.obj.name)
-    #     module=self.world.get_value(entity_id)
-    #     # if node.name not in module.exports:
-    #     #     raise Exception(
-    #     #         f'Module "{obj.name}" has no export "{node.name}"'
-    #     #     )
+    for item in node.items:
+      name=item.name
+      alias=item.alias or name
 
-    #     return module.exports[node.name.name]
+      entity_id=self.current_scope.lookup(name)
+      value=self.world.get_value(entity_id)
 
-    def visit_Member(self, node):
-        obj=self.visit(node.obj)
+      self._current_exports[alias]=value
 
-        if node.name.name not in obj.exports:
-            raise Exception(
-                f'Module "{obj.name}" has no export "{node.name}"'
-            )
+  def visit_Member(self,node):
+    obj=self.visit(node.obj)
 
-        return obj.exports[node.name.name]
+    if node.name.name not in obj.exports:
+      raise Exception(
+        f'Module "{obj.name}" has no export "{node.name}"'
+      )
+
+    return obj.exports[node.name.name]

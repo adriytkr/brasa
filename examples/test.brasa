@@ -1,59 +1,13 @@
-//importe std.texto como t;
+importe std.io como u;
+importe std.conversions como c;
+importe utils como uuu;
 
-importe utils como u;
+int age := c.to_int("44");
+u.diga(age*2);
 
-diga(u.say_hi());
-diga(u.say_hi());
-diga(u.say_hi());
-diga(u.say_hi());
-diga(u.say_hi());
-diga(u.say_hi());
-diga(u.say_hi());
-diga(u.say_hi());
-diga(u.say_hi());
-diga(u.say_hi());
-diga(u.say_hi());
-diga(u.say_hi());
-diga(u.say_hi());
-diga(u.say_hi());
-diga(u.say_hi());
-diga(u.say_hi());
-diga(u.say_hi());
-diga(u.say_hi());
-diga(u.say_hi());
-diga(u.say_hi());
-diga(u.say_hi());
-diga(u.say_hi());
-diga(u.say_hi());
-diga(u.say_hi());
-diga(u.say_hi());
-diga(u.say_hi());
-diga(u.say_hi());
-diga(u.say_hi());
-diga(u.say_hi());
-diga(u.say_hi());
-diga(u.say_hi());
-diga(u.say_hi());
-diga(u.say_hi());
+texto first_name := "Elleanor";
+texto second_name := "Rose";
 
-func gritar(int volume) -> texto{
-  retorne func(texto mensagem) -> texto{
-    texto sufixo:='';
+texto full_name := first_name + " " + second_name;
 
-    int x := 0;
-    enquanto(x < volume){
-      sufixo += "!";
-      x++;
-    }
-
-    // //retorne t.caixa_alta(mensagem) + sufixo;
-    retorne mensagem + sufixo;
-  };
-}
-
-(texto) -> texto gritar_baixo := gritar(1);
-(texto) -> texto gritar_alto := gritar(3);
-
-diga(gritar_baixo("AAAAAHH"));
-diga(gritar_alto("AAAAAHH22"));
-diga(gritar(10)('fuck'));
+u.diga(full_name);
