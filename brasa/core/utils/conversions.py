@@ -14,7 +14,10 @@ def to_python(value):
     return value.value
 
   if isinstance(value, BooleanValue):
-    return value.value
+    if value.value is True:
+      return 'verdadeiro'
+
+    return 'falso'
 
   if isinstance(value, NullValue):
     return None

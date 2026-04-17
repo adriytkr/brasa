@@ -30,6 +30,12 @@ def greater_than(left,right):
 def less_than(left,right):
   return BooleanValue(left.value < right.value)
 
+def less_than_or_equal_to(left,right):
+  return BooleanValue(left.value <= right.value)
+
+def greater_than_or_equal_to(left,right):
+  return BooleanValue(left.value >= right.value)
+
 def equal(left,right):
   return BooleanValue(left.value == right.value)
 

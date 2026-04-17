@@ -4,7 +4,7 @@ importe std.conversions como c;
 int age := c.to_int(u.leia());
 
 u.diga(age);
-u.diga(10 % 3);
+u.diga(age >= 0);
 
 texto name := "Ellea\\\'\"\tnor";
 u.diga(name);
